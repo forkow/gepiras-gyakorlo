@@ -1,9 +1,9 @@
 from itertools import islice
 from math import ceil, sqrt
 import sqlite3
-from hyphen import Hyphenator
+from hyphenator import Hyphenator
 
-hyphenator = Hyphenator("hu_HU")
+hyphenator = Hyphenator("./hyph_hu_HU.dic")
 
 KEY_MAP = {
     "a": (3, 0),
@@ -163,20 +163,6 @@ def contains_swear(word: str) -> bool:
     return False
 
 
-def syll_join(sylls: list[str]) -> str:
-    prefix_hyphen = False
-    result = ""
-    for syll in sylls:
-        if prefix_hyphen:
-            result += '-'
-            prefix_hyphen = False
-        if syll == '-':
-            prefix_hyphen = True
-        else:
-            result += syll
-        result += '-'
-    return result
-
 db = sqlite3.connect("../words.db")
 words = load_words("hu.txt")
 
@@ -185,7 +171,7 @@ db.execute("CREATE TABLE words(word TEXT, length REAL, hyphenated TEXT)")
 for word in words:
     if not is_valid_word(word) or contains_swear(word):
         continue
-    hyphenated = syll_join(hyphenator.syllables(word))
+    hyphenated = hyphenator.inserted(word)
     length = round(calculate_word_length(word))
     db.execute(f"INSERT INTO words VALUES (?,?,?)", (word, length, hyphenated))
 
