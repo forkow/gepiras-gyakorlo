@@ -139,7 +139,7 @@ def calculate_word_length(word: str, last_letter: str = None) -> int:
 
 
 def contains_swear(word: str) -> bool:
-    bad = [
+    badparts = [
         "fasz",
         "picsa",
         "picsá",
@@ -156,9 +156,29 @@ def contains_swear(word: str) -> bool:
         "bassz",
         "basz",
         "sperm",
+        "pina",
+        "piná",
+        "pöcs",
+        "pöccs",
+        "hitler",
+        "Hitler",
+        "fasiszta",
+        "fasizmus",
+        "Orbán",
+        "nigger",
+        "néger",
+        "buzi",
+        "szar"
         ]
-    for b in bad:
+    badwhole = [
+        "náci",
+        "neonáci",
+    ]
+    for b in badparts:
         if b in word:
+            return True
+    for b in badwhole:
+        if word == b:
             return True
     return False
 
@@ -166,14 +186,19 @@ def contains_swear(word: str) -> bool:
 db = sqlite3.connect("../words.db")
 words = load_words("hu.txt")
 
-db.execute("CREATE TABLE words(word TEXT, length REAL, hyphenated TEXT)")
+db.execute("CREATE TABLE words(word TEXT, length REAL, hyphenated TEXT, syllable_count INTEGER)")
 
+count = 0
 for word in words:
+    if count >= 50:
+        break
     if not is_valid_word(word) or contains_swear(word):
         continue
     hyphenated = hyphenator.inserted(word)
+    syllable_count = hyphenated.count('-') + 1 - int(hyphenated.count('--') > 0)
     length = round(calculate_word_length(word))
-    db.execute(f"INSERT INTO words VALUES (?,?,?)", (word, length, hyphenated))
+    db.execute(f"INSERT INTO words VALUES (?,?,?,?)", (word, length, hyphenated, syllable_count))
+    count += 1
 
 db.commit()
 db.close()
