@@ -8,11 +8,11 @@ class Mode(Enum):
 
     def to_text(self):
         if self == Mode.WORDS:
-            return "szavak"
+            return "Szavak"
         elif self == Mode.TEXT:
-            return "szoveg"
+            return "Szöveg"
         elif self == Mode.LONGTEXT:
-            return "hosszu szoveg"
+            return "Hosszú szöveg"
 
 
 class Difficulty(Enum):
@@ -22,8 +22,8 @@ class Difficulty(Enum):
 
     def to_text(self):
         if self == Difficulty.EASY:
-            return "konnyu"
+            return "Könnyű"
         elif self == Difficulty.MEDIUM:
-            return "kozepes"
+            return "Közepes"
         elif self == Difficulty.HARD:
-            return "nehez"
+            return "Nehéz"
