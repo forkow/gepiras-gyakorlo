@@ -25,8 +25,8 @@ def main():
     mode = select_mode()
     difficulty = select_difficulty()
 
-    print(f"mod: {mode.to_text()}")
-    print(f"nehezseg: {difficulty.to_text()}")
+    print(f"Mód: {mode.to_text()}")
+    print(f"Nehézség: {difficulty.to_text()}")
     print()
 
     GAMETABLE[mode](difficulty)
@@ -34,10 +34,10 @@ def main():
 
 def select_mode() -> Mode:
     while True:
-        print("valassz modot")
-        print(f"1) szavak")
-        print(f"2) szoveg")
-        print(f"3) hosszu szoveg")
+        print("Válassz módot")
+        print(f"1) Szavak")
+        print(f"2) Szöveg")
+        print(f"3) Hosszú szöveg")
         try:
             choice = int(sys.stdin.read(1))
             if choice >= 1 and choice <= 3:
@@ -49,10 +49,10 @@ def select_mode() -> Mode:
 
 def select_difficulty() -> Difficulty:
     while True:
-        print("valassz nehezseget")
-        print(f"1) konnyu")
-        print(f"2) kozepes")
-        print(f"3) nehez")
+        print("Válassz nehézséget")
+        print(f"1) Könnyű")
+        print(f"2) Közepes")
+        print(f"3) Nehéz")
         try:
             choice = int(sys.stdin.read(1))
             if choice >= 1 and choice <= 3:
