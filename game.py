@@ -55,7 +55,9 @@ def start_words(difficulty: Difficulty):
         time_to_type = time.time() - typing_start
         time_pad = padding - len(typed_in)
         typed.append((word, time_to_type, skipped))
-        print(f'\x1b[0m    {round(time_to_type, 1):>{time_pad}}mp')
+        time_color = "\x1b[0;31m" if skipped else "\x1b[0;32m"
+        print(f'{time_color}    {round(time_to_type, 1):>{time_pad}}mp', end="")
+        print("\x1b[0m")
     print()
     total_time = sum([time for _, time, _ in typed])
     if total_time != 0:
@@ -111,7 +113,8 @@ def start_text(difficulty: Difficulty):
         word_count = phrase.count(' ') + 1
         words_per_minute = word_count / (time_to_type / 60)
         typed.append((phrase, time_to_type, words_per_minute, skipped))
-        print(f"{round(time_to_type, 1):>{time_pad}}")
+        time_color = "\x1b[0;31m" if skipped else "\x1b[0;32m"
+        print(f"{time_color}{round(time_to_type, 1):>{time_pad}}")
         print("\x1b[0m")
     print()
     total_time = sum([time for _, time, _, _ in typed])
