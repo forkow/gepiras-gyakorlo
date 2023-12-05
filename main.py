@@ -28,6 +28,8 @@ def main():
 
     print(f"Mód: {mode.to_text()}")
     print(f"Nehézség: {difficulty.to_text()}")
+    print(f"Mód: {mode.to_text()}")
+    print(f"Nehézség: {difficulty.to_text()}")
     print()
 
     GAMETABLE[mode](difficulty)
