@@ -23,7 +23,6 @@ def start_words(difficulty: Difficulty):
         typed_in = ""
         index = 0
         skipped = False
-        print("\x1b[0;32m", end="")
         typing_start = time.time()
         while typed_in != word:
             char = sys.stdin.read(1)
@@ -39,6 +38,10 @@ def start_words(difficulty: Difficulty):
                 skipped = True
                 break
             if char.isprintable():
+                if index >= len(word) or word[index] != char:
+                    print("\x1b[0;31m", end="")
+                else:
+                    print("\x1b[0;32m", end="")
                 typed_in += char
                 index += 1
                 print(char, end="")
