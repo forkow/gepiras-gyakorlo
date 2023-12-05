@@ -13,7 +13,7 @@ WORDS_DIFFICULTY_TABLE = {
 
 
 def start_words(difficulty: Difficulty):
-    words = gen_random_words(*WORDS_DIFFICULTY_TABLE[difficulty])
+    words = get_random_words(*WORDS_DIFFICULTY_TABLE[difficulty])
     padding = len(max(words, key=lambda w: len(w[0]))[0]) + 3
 
     # need this to be able to `continue` from the inner while loop
@@ -49,7 +49,7 @@ def start_words(difficulty: Difficulty):
         print('\x1b[0m')
 
 
-def gen_random_words(min_length: int, max_length: int, count: int) -> list:
+def get_random_words(min_length: int, max_length: int, count: int) -> list:
     cur = DB.execute(
         f"SELECT * FROM words WHERE length <= {max_length} AND length >= {min_length} ORDER BY random() LIMIT {count}"
     )
