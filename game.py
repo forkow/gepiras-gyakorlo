@@ -66,8 +66,7 @@ def start_words(difficulty: Difficulty):
 
 
 def get_random_words(min_length: int, max_length: int, count: int) -> list:
-    cur = DB.execute(
-        f"SELECT * FROM words WHERE length <= {max_length} AND length >= {min_length} ORDER BY random() LIMIT {count}"
-    )
-    rows = cur.fetchall()
-    return rows
+    cursor = DB.cursor()
+    cursor.execute(f"SELECT * FROM words WHERE length <= {max_length} AND length >= {min_length} ORDER BY random() LIMIT {count}")
+    return cursor.fetchall()
+
