@@ -1,7 +1,9 @@
-from gametypes import Mode, Difficulty
 import sqlite3
 import sys
+import time
 
+from gametypes import Mode, Difficulty
+from math import floor
 
 DB = sqlite3.connect("data.db")
 
