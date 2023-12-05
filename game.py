@@ -3,7 +3,7 @@ import sqlite3
 import sys
 
 
-DB = sqlite3.connect("words.db")
+DB = sqlite3.connect("data.db")
 
 WORDS_DIFFICULTY_TABLE = {
     Difficulty.EASY: (0, 6, 10),
