@@ -13,23 +13,18 @@ WORDS_DIFFICULTY_TABLE = {
     Difficulty.HARD: (12, 24, 25),
 }
 
-
 def start_words(difficulty: Difficulty):
     words = get_random_words(*WORDS_DIFFICULTY_TABLE[difficulty])
     padding = len(max(words, key=lambda w: len(w[0]))[0]) + 3
-
-    # need this to be able to `continue` from the inner while loop
-    outer_continue = False
-    
+    typed = []
     for word, length, hyphenated, syllable_count in words:
-        if outer_continue:
-            outer_continue = False
-            continue
         print(f"{word:>{padding}}   |   \x1b[0;34m", end="")
         sys.stdout.flush()
         typed_in = ""
         index = 0
+        skipped = False
         print("\x1b[0;32m", end="")
+        typing_start = time.time()
         while typed_in != word:
             char = sys.stdin.read(1)
             if ord(char) == 127 and index != 0: # DEL
@@ -41,14 +36,30 @@ def start_words(difficulty: Difficulty):
                 index -= 1
                 continue
             if ord(char) == ord('\n'):
-                outer_continue = True
+                skipped = True
                 break
             if char.isprintable():
                 typed_in += char
                 index += 1
                 print(char, end="")
                 sys.stdout.flush()
-        print('\x1b[0m')
+        time_to_type = time.time() - typing_start
+        time_pad = padding - len(typed_in)
+        typed.append((word, time_to_type, skipped))
+        print(f'\x1b[0m    {round(time_to_type, 1):>{time_pad}}mp')
+    print()
+    total_time = sum([time for _, time, _ in typed])
+    if total_time != 0:
+        chars_per_second = sum([len(word) for word, _, skipped in typed if not skipped]) / total_time
+    else:
+        chars_per_second = 0
+    skipped = len([1 for _, _, skipped in typed if skipped])
+    if total_time >= 60:
+        print(f"Teljes idő: {floor(total_time / 60)}p {floor(total_time%60)}mp")
+    else:
+        print(f"Teljes idő: {round(total_time, 1)}mp")
+    print(f"Sebesség: {round(chars_per_second,1)} betu/mp")
+    print(f"Kihagyott: {skipped}")
 
 
 def get_random_words(min_length: int, max_length: int, count: int) -> list:
