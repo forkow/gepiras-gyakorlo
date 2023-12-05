@@ -5,6 +5,7 @@ import time
 from gametypes import Mode, Difficulty
 from math import floor
 
+
 DB = sqlite3.connect("data.db")
 
 WORDS_DIFFICULTY_TABLE = {
@@ -18,6 +19,7 @@ PHRASES_DIFFICULTY_TABLE = {
     Difficulty.MEDIUM: (2, 15),
     Difficulty.HARD: (3, 20),
 }
+
 
 def start_words(difficulty: Difficulty):
     words = get_random_words(*WORDS_DIFFICULTY_TABLE[difficulty])
@@ -71,6 +73,7 @@ def start_words(difficulty: Difficulty):
         print(f"Teljes idő: {round(total_time, 1)}mp")
     print(f"Sebesség: {round(chars_per_second,1)} betu/mp")
     print(f"Kihagyott: {skipped}")
+
 
 def start_text(difficulty: Difficulty):
     phrases = get_random_phrases(*PHRASES_DIFFICULTY_TABLE[difficulty])
@@ -130,10 +133,12 @@ def start_text(difficulty: Difficulty):
     skipped = len([1 for _, _, _, skipped in typed if skipped])
     print(f"Kihagyott: {skipped}")
 
+
 def get_random_words(min_length: int, max_length: int, count: int) -> list:
     cursor = DB.cursor()
     cursor.execute(f"SELECT * FROM words WHERE length <= {max_length} AND length >= {min_length} ORDER BY random() LIMIT {count}")
     return cursor.fetchall()
+
 
 def get_random_phrases(difficulty: int, count: int) -> list:
     cursor = DB.cursor()
