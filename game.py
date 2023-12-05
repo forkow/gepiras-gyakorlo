@@ -9,7 +9,7 @@ DB = sqlite3.connect("data.db")
 
 WORDS_DIFFICULTY_TABLE = {
     Difficulty.EASY: (0, 6, 10),
-    Difficulty.MEDIUM: (7, 10, 20),
+    Difficulty.MEDIUM: (7, 11, 20),
     Difficulty.HARD: (12, 24, 25),
 }
 
