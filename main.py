@@ -9,7 +9,7 @@ import tty
 
 GAMETABLE = {
     Mode.WORDS: game.start_words,
-    Mode.TEXT: (lambda diff: print(f"Mode.TEXT {diff}")),
+    Mode.TEXT: game.start_text,
 }
 
 TERM_OLD_ATTRS = None
