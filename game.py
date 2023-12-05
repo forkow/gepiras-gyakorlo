@@ -23,10 +23,11 @@ PHRASES_DIFFICULTY_TABLE = {
 
 def start_words(difficulty: Difficulty):
     words = get_random_words(*WORDS_DIFFICULTY_TABLE[difficulty])
-    padding = len(max(words, key=lambda w: len(w[0]))[0]) + 3
+    padding = len(max(words, key=lambda w: len(w[0]))[0]) + 5
     typed = []
-    for word, length in words:
-        print(f"{word:>{padding}}   |   \x1b[0;34m", end="")
+    for i, (word, length) in enumerate(words):
+        index_str = f" {i+1}. "
+        print(f"{index_str}{word:>{padding-len(index_str)}}   |   \x1b[0;34m", end="")
         sys.stdout.flush()
         typed_in = ""
         index = 0
@@ -80,8 +81,9 @@ def start_text(difficulty: Difficulty):
     padding_left = 5
     padding_right = len(max(phrases, key=lambda p: len(p[0]))[0]) + 5
     typed = []
-    for phrase, in phrases:
-        print(f"{' '*padding_left}{phrase}")
+    for i, (phrase,) in enumerate(phrases):
+        index_str = f"{i+1}. "
+        print(f"{' '*(padding_left-len(index_str))}{index_str}{phrase}")
         print(f"{' '*padding_left}{'-'*len(phrase)}")
         print(' '*padding_left, end="")
         sys.stdout.flush()
