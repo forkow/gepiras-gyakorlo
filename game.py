@@ -17,7 +17,7 @@ def start_words(difficulty: Difficulty):
     words = get_random_words(*WORDS_DIFFICULTY_TABLE[difficulty])
     padding = len(max(words, key=lambda w: len(w[0]))[0]) + 3
     typed = []
-    for word, length, hyphenated, syllable_count in words:
+    for word, length in words:
         print(f"{word:>{padding}}   |   \x1b[0;34m", end="")
         sys.stdout.flush()
         typed_in = ""
