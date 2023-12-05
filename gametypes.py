@@ -11,8 +11,6 @@ class Mode(Enum):
             return "Szavak"
         elif self == Mode.TEXT:
             return "Szöveg"
-        elif self == Mode.LONGTEXT:
-            return "Hosszú szöveg"
 
 
 class Difficulty(Enum):

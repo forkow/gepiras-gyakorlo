@@ -10,7 +10,6 @@ import tty
 GAMETABLE = {
     Mode.WORDS: game.start_words,
     Mode.TEXT: (lambda diff: print(f"Mode.TEXT {diff}")),
-    Mode.LONGTEXT: (lambda diff: print(f"Mode.LONGTEXT {diff}")),
 }
 
 TERM_OLD_ATTRS = None
@@ -37,10 +36,9 @@ def select_mode() -> Mode:
         print("Válassz módot")
         print(f"1) Szavak")
         print(f"2) Szöveg")
-        print(f"3) Hosszú szöveg")
         try:
             choice = int(sys.stdin.read(1))
-            if choice >= 1 and choice <= 3:
+            if choice >= 1 and choice <= 2:
                 print()
                 return Mode(choice)
         except ValueError:
