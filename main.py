@@ -16,6 +16,8 @@ TERM_OLD_ATTRS = None
 
 
 def main():
+    with open("banner.txt", "r") as banner:
+        print(banner.read())
     global TERM_OLD_ATTRS
     TERM_OLD_ATTRS = termios.tcgetattr(sys.stdin)
     tty.setcbreak(sys.stdin, when=termios.TCSANOW)
